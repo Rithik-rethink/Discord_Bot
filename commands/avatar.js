@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
-
+const mysql = require('mysql');
+ 
 module.exports = {
     name : 'avatar',
     description : 'Get a users avatar',

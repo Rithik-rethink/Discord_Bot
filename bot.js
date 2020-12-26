@@ -2,7 +2,23 @@ const discord = require('discord.js');
 const client = new discord.Client();
 const client_info = require('./client_info.js');
 const fs = require('fs');
-const prefix = '$'
+const prefix = '.'
+const mysql =require('mysql');
+var con = mysql.createConnection({
+    hostname: "localhost:5000",
+    user: "rithik",
+    password: "Rishabh1",
+    database : "DBMS"
+    
+});
+con.connect(function(err) {
+    if(err){
+        console.log(err.message);
+    }
+    else{
+        console.log('Connected!');
+    }
+});
 
 client.commands = new discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -39,7 +55,7 @@ function readMsg(msg){
         if(command.guildOnly && msg.channel.type === 'dm'){
             return message.reply('I can\'t execute that command inside DMs!');
         }
-        client.commands.get(command.name).execute(msg,arg);
+        client.commands.get(command.name).execute(msg,arg,con);
     }
     catch(e){
         // console.error(e);
