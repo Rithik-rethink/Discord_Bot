@@ -1,6 +1,7 @@
 const discord = require('discord.js');
 const client = new discord.Client();
 const client_info = require('./client_info.js');
+const env = require('dotenv').config();
 const fs = require('fs');
 const prefix = '.'
 const mysql =require('mysql');
@@ -31,7 +32,7 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-client.login(client_info.TOKEN);
+client.login(process.env.TOKEN);
 
 client.on('ready', readyDiscord);
 client.on('message', readMsg);
@@ -55,8 +56,6 @@ function readMsg(msg){
     
     const arg = msg.content.slice(prefix.length).trim().split(/ +/);
     const commandName = arg.shift().toLowerCase();
-      
-        
     
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if(!command){
