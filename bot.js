@@ -20,6 +20,7 @@ con.connect(function(err) {
     }
 });
 
+
 client.commands = new discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -38,14 +39,24 @@ client.on('message', readMsg);
 function readyDiscord(){
     console.log('ready 😇')
 }
+client.once("reconnecting", () => {
+    console.log("Reconnecting!");
+  });
+  
+  client.once("disconnect", () => {
+    console.log("Disconnect!");
+  });
 
 function readMsg(msg){
+    
     if(!msg.content.startsWith(prefix) || msg.author.bot){
         return;
-    }    
+    }  
     
     const arg = msg.content.slice(prefix.length).trim().split(/ +/);
     const commandName = arg.shift().toLowerCase();
+      
+        
     
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if(!command){

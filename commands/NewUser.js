@@ -41,6 +41,9 @@ module.exports = {
                         });
                         
                     }
+                    else{
+                        msg.reply('User already exists');
+                    }
                 }
             });
         }

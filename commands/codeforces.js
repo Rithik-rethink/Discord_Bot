@@ -17,9 +17,10 @@ module.exports = {
                 con.query(search_query , function(err ,result){
                     if(err){
                         msg.reply('Chutiya hai kya?');
-                        return;
                     }
-                    const embed = new MessageEmbed()
+                    else if(result.length > 0){
+
+                        const embed = new MessageEmbed()
                         .setColor('#00ff00')
                         .setThumbnail('http:'+result[0].avatar)
                         .setAuthor(result[0].CodeforcesHandle)
@@ -29,9 +30,13 @@ module.exports = {
                             { name: 'maxRating', value: result[0].maxRating, inline: true },
                             { name: 'Rank', value: result[0].rank ,inline : true},
                             { name: 'maxRank', value: result[0].maxRank, inline: true },
-
-                        )
-                    msg.channel.send(embed);
+                            
+                            )
+                            msg.channel.send(embed);
+                    }
+                    else{
+                        msg.reply('Chutiya hai kya?');
+                    }
                 })
             });
             
