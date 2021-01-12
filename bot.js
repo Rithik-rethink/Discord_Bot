@@ -1,6 +1,5 @@
 const discord = require('discord.js');
 const client = new discord.Client();
-const client_info = require('./client_info.js');
 const env = require('dotenv').config();
 const fs = require('fs');
 const prefix = '.'

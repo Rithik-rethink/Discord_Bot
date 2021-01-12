@@ -11,15 +11,16 @@ module.exports = {
         if(args.length === 0 || args.length > 1){
             return(msg.reply('Please Enter only 1 user ❌'));
         }
+            
             msg.mentions.users.map((x)=>{
                 console.log(x.id);
                 const search_query = `SELECT * FROM codeforces WHERE UserHandle = '${x.id}'`;
                 con.query(search_query , function(err ,result){
                     if(err){
-                        msg.reply('Chutiya hai kya?');
+                        msg.reply('User does not exist');
                     }
                     else if(result.length > 0){
-
+                        console.log(result[0].avatar);
                         const embed = new MessageEmbed()
                         .setColor('#00ff00')
                         .setThumbnail('http:'+result[0].avatar)
@@ -35,7 +36,7 @@ module.exports = {
                             msg.channel.send(embed);
                     }
                     else{
-                        msg.reply('Chutiya hai kya?');
+                        msg.reply('Please try again');
                     }
                 })
             });
